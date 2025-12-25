@@ -1,0 +1,51 @@
+/* src/index.css */
+:root {
+  /* Paleta de Cores M MORS */
+  --color-primary: #4D2032; /* O tom Vinho/Burgundy luxuoso */
+  --color-background: #FEFEFE; /* O Off-white para fundos limpos */
+  --color-text: #000000; /* Preto puro para contraste máximo */
+  --color-text-soft: #333333; /* Um cinza escuro para textos longos, menos agressivo que o preto puro */
+  --color-gold-accent: #D4AF37; /* (Opcional) Um dourado para pequenos detalhes cairia bem, adicionei como sugestão */
+
+  /* Tipografia */
+  --font-heading: 'Cinzel', serif;
+  --font-body: 'Montserrat', sans-serif;
+  
+  /* Espaçamentos Padrão */
+  --section-spacing: 120px; /* Espaço generoso entre sessões */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased; /* Deixa a fonte mais nítida */
+}
+
+/* Estilos Base para Títulos de Luxo */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  color: var(--color-primary);
+  font-weight: 400;
+  letter-spacing: 2px; /* Espaçamento entre letras dá sofisticação */
+  text-transform: uppercase;
+}
+
+p {
+  color: var(--color-text-soft);
+  font-weight: 300;
+}
+
+/* Utilitário para containers */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}

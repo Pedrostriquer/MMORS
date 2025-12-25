@@ -1,0 +1,106 @@
+.products-section {
+  padding: var(--section-spacing) 0;
+  background-color: var(--color-background);
+}
+
+.products-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.products-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.products-header p {
+  font-style: italic;
+  font-family: var(--font-body);
+  font-weight: 300;
+  color: #888;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.product-card {
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.product-image-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 5; /* Formato vertical elegante para joias */
+  background-color: #F7F7F7;
+  position: relative;
+  transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.product-card:hover .product-image-placeholder {
+  transform: scale(1.05);
+}
+
+.image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 40px;
+  background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transition: background 0.4s ease;
+}
+
+.product-card:hover .image-overlay {
+  background: linear-gradient(to top, rgba(77, 32, 50, 0.7) 0%, transparent 100%);
+}
+
+.category-tag {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.image-overlay h3 {
+  color: #FFFFFF;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+
+.view-more {
+  color: #FFFFFF;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-bottom: 1px solid #FFFFFF;
+  width: fit-content;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s ease;
+}
+
+.product-card:hover .view-more {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,90 @@
+.certification-section {
+  padding: var(--section-spacing) 0;
+  background-color: var(--color-background);
+}
+
+.cert-header {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.cert-card {
+  padding: 50px 30px;
+  background: #FFFFFF;
+  border: 1px solid #F0F0F0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.4s ease;
+}
+
+.cert-card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-5px);
+}
+
+.cert-icon-wrapper {
+  color: var(--color-primary);
+  margin-bottom: 25px;
+}
+
+.cert-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.cert-card p {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--color-text-soft);
+  margin-bottom: 30px;
+}
+
+/* Badges e Tags */
+.cert-badge {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 8px 16px;
+  border: 1px solid #EEE;
+  color: #999;
+}
+
+.gem-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.gem-tag {
+  font-size: 0.7rem;
+  background: #f9f9f9;
+  padding: 4px 10px;
+  border-radius: 2px;
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+/* Card em Destaque */
+.highlight-card {
+  border-color: rgba(77, 32, 50, 0.1);
+  background-color: #fdfafb; /* Um tom quase imperceptível de vinho */
+}
+
+@media (max-width: 1024px) {
+  .cert-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}

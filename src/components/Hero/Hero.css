@@ -1,0 +1,55 @@
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: var(--color-background); /* Pode adicionar uma imagem de fundo leve depois */
+  padding-top: 90px;
+}
+
+.hero-content {
+  max-width: 800px;
+}
+
+.hero-subtitle {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+  display: block;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  line-height: 1.2;
+  margin-bottom: 40px;
+}
+
+.hero h1 .slogan {
+  font-size: 1.2rem;
+  display: block;
+  margin-top: 10px;
+  font-family: var(--font-body);
+  font-weight: 300;
+  letter-spacing: 8px;
+  color: var(--color-text-soft);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 18px 40px;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  cursor: pointer;
+  transition: filter 0.3s;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.2);
+}

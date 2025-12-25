@@ -1,0 +1,81 @@
+.patrimonial-section {
+  padding: 120px 0;
+  background-color: #f8f8f8;
+  text-align: center;
+}
+
+.patrimonial-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.patrimonial-header h2 {
+  font-size: 2.8rem;
+  margin: 15px 0;
+}
+
+.cvm-badge {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  padding: 8px 20px;
+  margin-top: 10px;
+}
+
+.patrimonial-intro {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  margin: 40px 0 80px;
+  font-weight: 300;
+}
+
+.patrimonial-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.feature-box {
+  padding: 40px 20px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  transition: transform 0.3s ease;
+}
+
+.feature-box:hover {
+  transform: translateY(-10px);
+}
+
+.feature-box svg {
+  color: var(--color-gold-accent, #D4AF37);
+  margin-bottom: 20px;
+}
+
+.feature-box h4 {
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  color: var(--color-primary);
+}
+
+.feature-box p {
+  font-size: 0.85rem;
+  color: var(--color-text-soft);
+  line-height: 1.5;
+}
+
+@media (max-width: 850px) {
+  .patrimonial-features {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .patrimonial-header h2 {
+    font-size: 2rem;
+  }
+}

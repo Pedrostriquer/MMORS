@@ -1,0 +1,70 @@
+.navbar {
+  width: 100%;
+  height: 90px;
+  background-color: var(--color-background);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.nav-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  letter-spacing: 6px;
+  color: var(--color-primary);
+  font-weight: 400;
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  transition: opacity 0.3s;
+}
+
+.nav-links a:hover {
+  opacity: 0.6;
+}
+/* ... (mantenha o código anterior e atualize estas partes) */
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-img {
+  height: 50px; /* Altura elegante para joalheria */
+  width: auto;
+  object-fit: contain;
+  /* Se a logo for muito escura, você pode usar filter: brightness(0) para deixá-la 
+     totalmente preta ou filter: invert(1) se o fundo for Burgundy */
+}
+
+/* Ajuste opcional: se a logo for muito larga, diminua o gap dos links */
+.nav-links {
+  display: flex;
+  gap: 30px; 
+}
