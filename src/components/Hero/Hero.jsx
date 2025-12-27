@@ -12,7 +12,7 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="hero-subtitle"
         >
-          Alta Joalharia & Patrimônio
+          Alta Joalheria & Patrimônio
         </motion.span>
         
         <motion.h1 

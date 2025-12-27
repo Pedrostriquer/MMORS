@@ -52,6 +52,7 @@ const LayoutWrapper = ({ children }) => {
 const HomePage = () => (
   <>
     <Hero />
+    <Products /> 
     <About />
     <Essence />
     <Certification />
