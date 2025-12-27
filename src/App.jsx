@@ -57,7 +57,6 @@ const HomePage = () => (
     <Essence />
     <Certification />
     <Patrimony />
-    <Products /> 
     <Bespoke />
     <PatrimonialLevel />
   </>
