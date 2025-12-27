@@ -1,5 +1,6 @@
 import React, { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { CartProvider } from './context/CartContext'; // Importação do contexto da sacola
 import './App.css';
 
 // --- IMPORTAÇÃO DOS COMPONENTES PÚBLICOS ---
@@ -16,13 +17,15 @@ import Footer from './components/Footer/Footer';
 import Vitrine from './components/Vitrine/Vitrine';
 import CollectionPage from './components/CollectionPage/CollectionPage';
 import Loader from './components/Loader/Loader';
+import ProductPage from './components/ProductPage/ProductPage'; // Página de detalhes
+import CartPage from './components/CartPage/CartPage'; // Página da sacola
 
 // --- IMPORTAÇÃO DO ADMIN (Caminhos atualizados) ---
 const Login = lazy(() => import('./admin/login/Login'));
 const AdminDashboard = lazy(() => import('./admin/layout/AdminLayout'));
 const ProtectedRoute = lazy(() => import('./admin/auth/ProtectedRoute'));
 
-// Auxiliar: Reseta o scroll
+// Auxiliar: Reseta o scroll ao mudar de página
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -31,10 +34,9 @@ const ScrollToTop = () => {
   return null;
 };
 
-// Componente para gerenciar a exibição do Layout Público (Navbar/Footer)
+// Gerencia a exibição da Navbar/Footer (esconde no Admin)
 const LayoutWrapper = ({ children }) => {
   const location = useLocation();
-  // Se a rota começar com /admin, não mostra Navbar nem Footer
   const isAdminRoute = location.pathname.startsWith('/admin');
 
   return (
@@ -46,6 +48,7 @@ const LayoutWrapper = ({ children }) => {
   );
 };
 
+// Composição da Home
 const HomePage = () => (
   <>
     <Hero />
@@ -61,38 +64,42 @@ const HomePage = () => (
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      
-      <main className="app-container">
-        {/* O LayoutWrapper decide se mostra ou não Navbar/Footer */}
-        <LayoutWrapper>
-          <Suspense fallback={<Loader />}>
-            <Routes>
-              {/* --- ROTAS PÚBLICAS --- */}
-              <Route path="/" element={<HomePage />} />
-              <Route path="/categoria/:category" element={<Vitrine />} />
-              <Route path="/categoria/:category/:subcategory" element={<Vitrine />} />
-              <Route path="/colecao/:collectionId" element={<CollectionPage />} />
-              <Route path="/a-marca" element={<About />} />
-              <Route path="/sob-medida" element={<Bespoke />} />
+    // O CartProvider deve envolver toda a estrutura para o useCart funcionar
+    <CartProvider>
+      <Router>
+        <ScrollToTop />
+        
+        <main className="app-container">
+          <LayoutWrapper>
+            <Suspense fallback={<Loader />}>
+              <Routes>
+                {/* --- ROTAS PÚBLICAS --- */}
+                <Route path="/" element={<HomePage />} />
+                <Route path="/categoria/:category" element={<Vitrine />} />
+                <Route path="/categoria/:category/:subcategory" element={<Vitrine />} />
+                <Route path="/colecao/:collectionId" element={<CollectionPage />} />
+                <Route path="/produto/:productId" element={<ProductPage />} />
+                <Route path="/carrinho" element={<CartPage />} />
+                <Route path="/a-marca" element={<About />} />
+                <Route path="/sob-medida" element={<Bespoke />} />
 
-              {/* --- ROTAS ADMIN (Organizadas na nova estrutura) --- */}
-              <Route path="/admin/login" element={<Login />} />
-              
-              <Route 
-                path="/admin/dashboard/*" 
-                element={
-                  <ProtectedRoute>
-                    <AdminDashboard />
-                  </ProtectedRoute>
-                } 
-              />
-            </Routes>
-          </Suspense>
-        </LayoutWrapper>
-      </main>
-    </Router>
+                {/* --- ROTAS ADMIN --- */}
+                <Route path="/admin/login" element={<Login />} />
+                
+                <Route 
+                  path="/admin/dashboard/*" 
+                  element={
+                    <ProtectedRoute>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  } 
+                />
+              </Routes>
+            </Suspense>
+          </LayoutWrapper>
+        </main>
+      </Router>
+    </CartProvider>
   );
 }
 

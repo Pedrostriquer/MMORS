@@ -1,108 +1,110 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { db } from '../../firebase/config'; //
+import { doc, getDoc } from 'firebase/firestore'; //
+import { ShoppingBag, User } from 'lucide-react'; 
+import { useCart } from '../../context/CartContext'; // Assumindo a criação do Contexto
 import './Navbar.css';
-import logo from '../../assets/Captura de Tela 2025-12-25 às 16.30.16 (1).png';
+import logo from '../../assets/Captura de Tela 2025-12-25 às 16.30.16 (1).png'; //
 
 const Navbar = () => {
   const [activeMenu, setActiveMenu] = useState(null);
+  const [navbarConfig, setNavbarConfig] = useState({ items: [] });
+  const { cart } = useCart();
 
-  // Helper para renderizar o mega menu de forma limpa
-  const renderMegaMenu = (category) => {
-    const menus = {
-      aneis: (
-        <div className="mega-content">
-          <div className="mega-col">
-            <h4>ESTILOS</h4>
-            <Link to="/categoria/aneis/solitarios">Solitários</Link>
-            <Link to="/categoria/aneis/aliancas">Alianças</Link>
-            <Link to="/categoria/aneis/chuveiros">Chuveiros</Link>
-            <Link to="/categoria/aneis/aparadores">Aparadores</Link>
-          </div>
-          <div className="mega-col">
-            <h4>MATERIAIS</h4>
-            <Link to="/categoria/aneis/ouro">Ouro 18k</Link>
-            <Link to="/categoria/aneis/diamantes">Diamantes</Link>
-            <Link to="/categoria/aneis/pedras-preciosas">Pedras Preciosas</Link>
-          </div>
-        </div>
-      ),
-      brincos: (
-        <div className="mega-content">
-          <div className="mega-col">
-            <h4>MODELOS</h4>
-            <Link to="/categoria/brincos/argolas">Argolas</Link>
-            <Link to="/categoria/brincos/pendentes">Pendentes</Link>
-            <Link to="/categoria/brincos/ear-cuffs">Ear Cuffs</Link>
-            <Link to="/categoria/brincos/piercings">Piercings</Link>
-          </div>
-          <div className="mega-col">
-            <h4>OCASIÃO</h4>
-            <Link to="/categoria/brincos/festa">Festa</Link>
-            <Link to="/categoria/brincos/dia-a-dia">Dia a Dia</Link>
-          </div>
-        </div>
-      ),
-      pulseiras: (
-        <div className="mega-content">
-          <div className="mega-col">
-            <h4>TIPOS</h4>
-            <Link to="/categoria/pulseiras/braceletes">Braceletes</Link>
-            <Link to="/categoria/pulseiras/rivieras">Rivieras</Link>
-            <Link to="/categoria/pulseiras/correntes">Correntes</Link>
-          </div>
-          <div className="mega-col">
-            <h4>COLEÇÕES</h4>
-            <Link to="/colecao/identidade">M MORS Icon</Link>
-          </div>
-        </div>
-      ),
-      colecoes: (
-        <div className="mega-content">
-          <div className="mega-col">
-            <h4>LANÇAMENTOS</h4>
-            <Link to="/colecao/essence">Essence</Link>
-            <Link to="/colecao/patrimony">Patrimony</Link>
-          </div>
-          <div className="mega-col">
-            <h4>ESPECIAIS</h4>
-            <Link to="/colecao/bridal">Bridal / Noivas</Link>
-            <Link to="/colecao/identidade">M MORS Icon</Link>
-          </div>
-        </div>
-      )
+  // Calcula o total de itens na sacola para o badge
+  const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+  // Busca a configuração da Navbar no Firebase (Arquiteto de Navegação)
+  useEffect(() => {
+    const fetchNavbar = async () => {
+      try {
+        const configDoc = await getDoc(doc(db, "settings", "navbar")); //
+        if (configDoc.exists()) {
+          setNavbarConfig(configDoc.data());
+        }
+      } catch (error) {
+        console.error("Erro ao carregar configuração da navbar:", error);
+      }
     };
-    return menus[category] || null;
+    fetchNavbar();
+  }, []);
+
+  // Renderizador do Mega Menu Dinâmico
+  const renderDynamicMegaMenu = (item) => {
+    if (!item.columns || item.columns.length === 0) return null;
+
+    return (
+      <div className="mega-content">
+        {item.columns.map((col, idx) => (
+          <div key={idx} className="mega-col">
+            <h4>{col.titulo.toUpperCase()}</h4>
+            {col.links.map((link, lIdx) => {
+              // URL baseada no tipo (Produto ou Coleção) configurado no Admin
+              const url = item.type === 'product' 
+                ? `/categoria/${item.id}/${link.id}` 
+                : `/colecao/${link.id}`;
+                
+              return (
+                <Link 
+                  key={lIdx} 
+                  to={url} 
+                  onClick={() => setActiveMenu(null)}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (
     <nav className="navbar" onMouseLeave={() => setActiveMenu(null)}>
       <div className="nav-main-row">
         <div className="nav-container">
+          {/* Lado Esquerdo: Textos removidos conforme solicitado */}
           <div className="nav-links">
-            <Link to="/a-marca">A MARCA</Link>
-            <Link to="/sob-medida">SOB MEDIDA</Link>
+            {/* Espaço reservado para manter o alinhamento central da logo */}
           </div>
+
           <div className="nav-logo">
             <Link to="/"><img src={logo} alt="M MORS" className="logo-img" /></Link>
           </div>
-          <div className="nav-links">
-            <Link to="/contato">CONTATO</Link>
-            <Link to="/login">MINHA CONTA</Link>
+
+          {/* Lado Direito: Ícones de Login e Carrinho no lugar de "CONTATO / MINHA CONTA" */}
+          <div className="nav-links icons-nav">
+            {/* <Link to="/admin/login" className="nav-icon-link" title="Minha Conta">
+              <User size={20} />
+            </Link> */}
+            <Link to="/carrinho" className="nav-icon-link cart-link" title="Sua Sacola">
+              <ShoppingBag size={20} />
+              {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+            </Link>
           </div>
         </div>
       </div>
 
       <div className="nav-products-row">
         <ul className="products-menu">
-          {['aneis', 'brincos', 'pulseiras', 'colecoes'].map((item) => (
-            <li key={item} onMouseEnter={() => setActiveMenu(item)}>
-              <Link to={`/categoria/${item}`} className="nav-item-link">
-                {item.toUpperCase()}
+          {navbarConfig.items.map((item) => (
+            <li 
+              key={item.id} 
+              onMouseEnter={() => setActiveMenu(item.id)}
+            >
+              <Link 
+                to={item.type === 'product' ? `/categoria/${item.id}` : '#'} 
+                className={`nav-item-link ${activeMenu === item.id ? 'active' : ''}`}
+              >
+                {item.nome.toUpperCase()}
               </Link>
-              {activeMenu === item && (
+              
+              {activeMenu === item.id && item.columns && item.columns.length > 0 && (
                 <div className="mega-menu-wrapper">
                   <div className="mega-menu">
-                    {renderMegaMenu(item)}
+                    {renderDynamicMegaMenu(item)}
                   </div>
                 </div>
               )}

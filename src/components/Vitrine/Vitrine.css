@@ -184,3 +184,23 @@
 }
 
 .product-price { font-weight: 500; font-size: 0.9rem; color: #111; }
+.filter-label.sub-item {
+  margin-left: 20px; /* Indentação */
+  margin-top: 5px;
+  opacity: 0.8;
+  font-size: 0.7rem;
+}
+
+.attr-block {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.empty-state-lux {
+  padding: 200px 0;
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-size: 1.5rem;
+  color: #888;
+}

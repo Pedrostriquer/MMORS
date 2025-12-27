@@ -1,0 +1,139 @@
+.acervo-manager {
+  padding: 30px;
+}
+
+.items-grid-admin {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.acervo-card-admin {
+  background: white;
+  border: 1px solid #eee;
+  padding: 20px;
+  position: relative;
+  display: flex;
+  gap: 20px;
+  transition: box-shadow 0.3s;
+}
+
+.acervo-card-admin:hover {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.card-index {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  background: #111;
+  color: white;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  border-radius: 50%;
+}
+
+.image-upload-section {
+  width: 120px;
+  height: 150px;
+  flex-shrink: 0;
+}
+
+.upload-placeholder, .preview-container {
+  width: 100%;
+  height: 100%;
+  border: 2px dashed #eee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #aaa;
+  font-size: 0.7rem;
+  text-align: center;
+  gap: 10px;
+  position: relative;
+}
+
+.preview-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.change-img {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.card-fields {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-fields input {
+  padding: 10px;
+  border: 1px solid #eee;
+  font-size: 0.85rem;
+}
+
+.link-config {
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.link-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.link-config select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  font-size: 0.8rem;
+  margin-bottom: 5px;
+}
+
+.remove-card-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #ccc;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.remove-card-btn:hover { color: #ff4444; }
+
+.add-card-slot {
+  border: 2px dashed #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  color: #aaa;
+  background: #fbfbfb;
+  cursor: pointer;
+  min-height: 250px;
+}

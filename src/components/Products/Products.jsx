@@ -1,53 +1,81 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { db } from '../../firebase/config';
+import { doc, getDoc } from 'firebase/firestore';
 import './Products.css';
 
 const Products = () => {
-  const productLines = [
-    { title: "Anéis de Diamantes", category: "Exclusividade" },
-    { title: "Pedras Preciosas", category: "Naturais" },
-    { title: "Joalheria Premium", category: "Brincos, Colares e Pulseiras" },
-    { title: "Alianças Especiais", category: "Momentos" },
-    { title: "Peças Sob Encomenda", category: "Design Autoral" },
-    { title: "Coleções Limitadas", category: "Peças Raras" }
-  ];
+  const [acervoItems, setAcervoItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAcervo = async () => {
+      try {
+        const docRef = doc(db, "settings", "acervo");
+        const docSnap = await getDoc(docRef);
+        
+        if (docSnap.exists()) {
+          setAcervoItems(docSnap.data().items || []);
+        }
+      } catch (error) {
+        console.error("Erro ao carregar o acervo:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAcervo();
+  }, []);
+
+  // Função auxiliar para gerar a URL correta baseada na configuração do Admin
+  const getDestinationLink = (item) => {
+    switch (item.linkType) {
+      case 'collection':
+        return `/colecao/${item.linkValue}`;
+      case 'product':
+        return `/produto/${item.linkValue}`;
+      case 'vitrine':
+        // Se houver um filtro de atributo (ex: Ouro 18k), manda para a subcategoria
+        if (item.filterAttributeId) {
+          return `/categoria/${item.linkValue}/${item.filterAttributeId}`;
+        }
+        return `/categoria/${item.linkValue}`;
+      default:
+        return '#';
+    }
+  };
+
+  if (loading) return null; // Ou um pequeno loader elegante
 
   return (
-    <section id="products" className="products-section">
-      <div className="container">
-        <motion.div 
-          className="products-header"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <span className="section-label">O Acervo</span>
-          <h2>Linhas de Produtos</h2>
-          <p>Explore a maestria artesanal em cada detalhe de nossas coleções.</p>
-        </motion.div>
+    <section className="products-section">
+      <div className="products-header">
+        <h2>ACERVO M MORS</h2>
+        <p>A curadoria definitiva da alta joalharia</p>
+      </div>
 
-        <div className="products-grid">
-          {productLines.map((item, index) => (
-            <motion.div 
-              key={index}
-              className="product-card"
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <div className="product-image-placeholder">
-                {/* Futuramente aqui entrará a tag <img src="..." /> */}
-                <div className="image-overlay">
-                  <span className="category-tag">{item.category}</span>
-                  <h3>{item.title}</h3>
-                  <div className="view-more">Ver Detalhes</div>
-                </div>
+      <div className="products-grid">
+        {acervoItems.map((item) => (
+          <Link 
+            key={item.id} 
+            to={getDestinationLink(item)} 
+            className="product-card"
+          >
+            <div className="product-image-placeholder">
+              {item.imageUrl ? (
+                <img src={item.imageUrl} alt={item.title} className="acervo-img" />
+              ) : (
+                <div className="img-fallback">M MORS</div>
+              )}
+              
+              <div className="image-overlay">
+                <span className="category-tag">{item.category}</span>
+                <h3>{item.title}</h3>
+                <span className="view-more">DESCOBRIR</span>
               </div>
-            </motion.div>
-          ))}
-        </div>
+            </div>
+          </Link>
+        ))}
       </div>
     </section>
   );

@@ -4,7 +4,8 @@ import Sidebar from '../sidebar/Sidebar';
 import CategoryManager from '../categories/CategoryManager';
 import ProductManager from '../products/ProductManager';
 import CollectionManager from '../collections/CollectionManager';
-import NavbarManager from '../navbar/NavbarManager'; // Nova Importação
+import NavbarManager from '../navbar/NavbarManager';
+import AcervoManager from '../acervo/AcervoManager'; // Nova Importação
 import './AdminLayout.css';
 
 const AdminLayout = () => {
@@ -23,7 +24,8 @@ const AdminLayout = () => {
           <Route path="/categorias" element={<CategoryManager />} />
           <Route path="/produtos" element={<ProductManager />} />
           <Route path="/colecoes" element={<CollectionManager />} />
-          <Route path="/navbar" element={<NavbarManager />} /> {/* Nova Rota */}
+          <Route path="/navbar" element={<NavbarManager />} />
+          <Route path="/acervo" element={<AcervoManager />} /> {/* Nova Rota */}
           
           <Route path="/promocoes" element={<div className="welcome-card"><h2>Promoções</h2><p>Em breve.</p></div>} />
         </Routes>

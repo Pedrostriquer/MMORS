@@ -8,9 +8,9 @@
 
 .bespoke-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 4fr 5fr;
   width: 100%;
-  max-width: 1600px;
+  max-width: 1500px;
   margin: 0 auto;
   gap: 0;
 }
@@ -18,7 +18,7 @@
 /* Lado da Imagem */
 .bespoke-image {
   position: relative;
-  height: 90vh; /* Ocupa quase a altura toda da tela */
+  height: 80vh; /* Ocupa quase a altura toda da tela */
   overflow: hidden;
 }
 
@@ -51,7 +51,7 @@
 }
 
 .text-wrapper {
-  max-width: 500px;
+  max-width: 600px;
 }
 
 .bespoke-content h2 {

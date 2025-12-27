@@ -1,87 +1,107 @@
+/* --- SECÇÃO GERAL --- */
 .products-section {
-  padding: var(--section-spacing) 0;
-  background-color: var(--color-background);
+  padding: 130px 0; /* Espaçamento superior e inferior */
+  background-color: #fff;
 }
 
 .products-header {
   text-align: center;
-  margin-bottom: 80px;
+  margin-bottom: 60px;
 }
 
 .products-header h2 {
-  font-size: 2.5rem;
+  font-family: "Playfair Display", serif;
+  font-size: 2.2rem;
+  font-weight: 400;
   margin-bottom: 15px;
+  letter-spacing: 4px;
 }
 
 .products-header p {
-  font-style: italic;
-  font-family: var(--font-body);
-  font-weight: 300;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
   color: #888;
 }
 
+/* --- GRID/FLEX PARA CENTRALIZAÇÃO --- */
 .products-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  display: flex;
+  flex-wrap: wrap; /* Permite quebrar linha */
+  justify-content: center; /* Centraliza os itens na linha */
+  gap: 40px 30px; /* 40px vertical, 30px horizontal */
+  max-width: 1500px; /* Diminui a largura total do grupo de cards */
+  margin: 0 auto; /* Centraliza o bloco na tela */
+  padding: 0 40px; /* Garante que nunca encoste nas bordas da tela */
 }
 
 .product-card {
+  flex: 0 1 330px; /* Largura base menor (320px) e não deixa esticar */
   cursor: pointer;
   overflow: hidden;
   position: relative;
+  text-decoration: none;
+  display: block;
 }
 
+/* --- CONTENTOR DA IMAGEM --- */
 .product-image-placeholder {
   width: 100%;
-  aspect-ratio: 4 / 5; /* Formato vertical elegante para joias */
+  aspect-ratio: 4 / 6; /* Proporção solicitada: mais alto e fino */
   background-color: #F7F7F7;
   position: relative;
+  overflow: hidden;
   transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
-.product-card:hover .product-image-placeholder {
-  transform: scale(1.05);
+.acervo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
+.product-card:hover .acervo-img {
+  transform: scale(1.08);
+}
+
+/* --- OVERLAY E TEXTOS --- */
 .image-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 40px;
-  background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 100%);
+  padding: 30px;
+  background: linear-gradient(to top, rgba(0,0,0,0.65) 40%, transparent 100%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  transition: background 0.4s ease;
-}
-
-.product-card:hover .image-overlay {
-  background: linear-gradient(to top, rgba(77, 32, 50, 0.7) 0%, transparent 100%);
+  z-index: 2;
 }
 
 .category-tag {
-  color: rgba(255,255,255,0.8);
-  font-size: 0.65rem;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.6rem;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   margin-bottom: 8px;
 }
 
 .image-overlay h3 {
   color: #FFFFFF;
-  font-size: 1.2rem;
-  margin-bottom: 15px;
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-bottom: 12px;
   letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .view-more {
   color: #FFFFFF;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  border-bottom: 1px solid #FFFFFF;
+  border-bottom: 1px solid rgba(255,255,255,0.5);
   width: fit-content;
   opacity: 0;
   transform: translateY(10px);
@@ -93,14 +113,17 @@
   transform: translateY(0);
 }
 
-@media (max-width: 1024px) {
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 768px) {
   .products-grid {
-    grid-template-columns: 1fr 1fr;
+    padding: 0 20px;
   }
-}
+  
+  .product-card {
+    flex: 0 1 280px; /* Ainda menor em tablets */
+  }
 
-@media (max-width: 600px) {
-  .products-grid {
-    grid-template-columns: 1fr;
+  .products-header h2 {
+    font-size: 1.8rem;
   }
 }

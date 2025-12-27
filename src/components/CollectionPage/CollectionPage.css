@@ -3,9 +3,10 @@
   background-color: #fff;
 }
 
+/* --- SEÇÃO HERO (TOPO) --- */
 .collection-hero-container {
   display: flex;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   gap: 60px;
   padding: 40px 20px;
@@ -14,11 +15,19 @@
 
 .collection-image-side {
   flex: 1;
-  height: 500px;
+  height: 700px;
   background-color: #f9f9f9;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden; /* Garante que a imagem não saia do contentor */
+}
+
+/* Ajuste para a imagem de campanha */
+.hero-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Preenche o espaço lateral sem sobrar branco */
 }
 
 .collection-img-placeholder {
@@ -63,7 +72,7 @@
   max-width: 500px;
 }
 
-/* Grid de Produtos */
+/* --- GRID DE PRODUTOS --- */
 .collection-grid-section {
   max-width: 1200px;
   margin: 80px auto;
@@ -91,7 +100,6 @@
   color: #999;
 }
 
-/* Reutilizando estilos de card parecidos com sua Vitrine */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -102,8 +110,9 @@
   transition: transform 0.3s ease;
 }
 
+/* --- AJUSTE DOS CARDS DE PRODUTO --- */
 .product-image-box {
-  height: 320px;
+  /* height: 320px; */
   background-color: #f7f7f7;
   position: relative;
   display: flex;
@@ -111,6 +120,19 @@
   justify-content: center;
   margin-bottom: 15px;
   overflow: hidden;
+}
+
+/* Evita o zoom excessivo e mantém a peça inteira visível */
+.product-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Garante que a joia não seja cortada */
+  padding: 0px;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image-box img {
+  transform: scale(1.08); /* Zoom elegante apenas no hover */
 }
 
 .img-placeholder-small {
@@ -129,6 +151,7 @@
   transition: bottom 0.3s ease;
   font-size: 0.7rem;
   letter-spacing: 2px;
+  z-index: 2;
 }
 
 .product-card:hover .view-btn {
@@ -152,6 +175,7 @@
   font-size: 1rem;
 }
 
+/* --- RESPONSIVIDADE --- */
 @media (max-width: 768px) {
   .collection-hero-container {
     flex-direction: column;
@@ -163,5 +187,15 @@
   }
   .collection-text-side h1 {
     font-size: 2rem;
+  }
+  
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr); /* Dois itens por linha em tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: 1fr; /* Um item por linha em telemóveis pequenos */
   }
 }

@@ -9,7 +9,8 @@ import {
   LogOut, 
   ChevronLeft, 
   ChevronRight,
-  LayoutDashboard 
+  LayoutDashboard,
+  LayoutTemplate // Novo ícone
 } from 'lucide-react';
 import './Sidebar.css';
 
@@ -44,6 +45,12 @@ const Sidebar = () => {
         <NavLink to="/admin/dashboard/colecoes" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
           <Sparkles size={20} className="icon" />
           <span>Coleções</span>
+        </NavLink>
+
+        {/* Novo link para Gestão do Acervo (Home) */}
+        <NavLink to="/admin/dashboard/acervo" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+          <LayoutTemplate size={20} className="icon" />
+          <span>Acervo (Home)</span>
         </NavLink>
 
         <NavLink to="/admin/dashboard/navbar" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
