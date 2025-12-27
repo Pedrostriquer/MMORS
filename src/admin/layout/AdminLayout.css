@@ -1,0 +1,59 @@
+/* Container principal que envolve a Sidebar e o Conteúdo */
+.admin-layout-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #fcfcfc;
+  /* Removido o gap para evitar o espaço sobrando entre os elementos */
+}
+
+.admin-main-view {
+  flex: 1; /* Ocupa todo o resto do espaço disponível */
+  padding: 40px;
+  overflow-y: auto;
+  transition: all 0.3s ease; /* Suaviza quando a sidebar encolhe */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card de boas-vindas exibido na rota principal /admin/dashboard */
+.welcome-card {
+  background: #ffffff;
+  padding: 50px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  max-width: 800px;
+  border: 1px solid #eee;
+}
+
+.welcome-card h1 {
+  font-size: 2.8rem;
+  font-weight: 300;
+  color: #1a1a1a;
+  margin-bottom: 15px;
+  letter-spacing: -1px;
+}
+
+.welcome-card p {
+  font-size: 1.2rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Ajustes de responsividade básica (opcional) */
+@media (max-width: 1024px) {
+  .admin-main-view {
+    padding: 30px;
+  }
+  
+  .welcome-card {
+    padding: 30px;
+  }
+}
+
+/* Estilo para garantir que títulos de páginas dentro do admin sejam consistentes */
+.admin-main-view h2 {
+  font-size: 2rem;
+  font-weight: 400;
+  color: #111;
+  margin-bottom: 30px;
+}

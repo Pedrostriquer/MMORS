@@ -1,0 +1,167 @@
+.collection-page {
+  padding-top: 120px; /* Espaço para a Navbar fixa */
+  background-color: #fff;
+}
+
+.collection-hero-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 60px;
+  padding: 40px 20px;
+  align-items: center;
+}
+
+.collection-image-side {
+  flex: 1;
+  height: 500px;
+  background-color: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.collection-img-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #ccc;
+  gap: 10px;
+}
+
+.collection-text-side {
+  flex: 1;
+}
+
+.collection-label {
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  color: #888;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.collection-text-side h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 3rem;
+  font-weight: 400;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.divider {
+  width: 60px;
+  height: 1px;
+  background-color: #333;
+  margin-bottom: 30px;
+}
+
+.collection-story {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #444;
+  max-width: 500px;
+}
+
+/* Grid de Produtos */
+.collection-grid-section {
+  max-width: 1200px;
+  margin: 80px auto;
+  padding: 0 20px;
+}
+
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+  margin-bottom: 40px;
+}
+
+.section-title h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.section-title span {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+/* Reutilizando estilos de card parecidos com sua Vitrine */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 40px 20px;
+}
+
+.product-card {
+  transition: transform 0.3s ease;
+}
+
+.product-image-box {
+  height: 320px;
+  background-color: #f7f7f7;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+.img-placeholder-small {
+    color: #ddd;
+}
+
+.view-btn {
+  position: absolute;
+  bottom: -50px;
+  width: 100%;
+  padding: 15px;
+  background: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: bottom 0.3s ease;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+}
+
+.product-card:hover .view-btn {
+  bottom: 0;
+}
+
+.product-meta h3 {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.material-text {
+  font-size: 0.75rem;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.product-price {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .collection-hero-container {
+    flex-direction: column;
+    padding-top: 20px;
+  }
+  .collection-image-side {
+    width: 100%;
+    height: 300px;
+  }
+  .collection-text-side h1 {
+    font-size: 2rem;
+  }
+}

@@ -52,7 +52,7 @@ const Navbar = () => {
           </div>
           <div className="mega-col">
             <h4>COLEÇÕES</h4>
-            <Link to="/colecoes/identidade">M MORS Icon</Link>
+            <Link to="/colecao/identidade">M MORS Icon</Link>
           </div>
         </div>
       ),
@@ -60,13 +60,13 @@ const Navbar = () => {
         <div className="mega-content">
           <div className="mega-col">
             <h4>LANÇAMENTOS</h4>
-            <Link to="/colecoes/essence">Essence</Link>
-            <Link to="/colecoes/patrimony">Patrimony</Link>
+            <Link to="/colecao/essence">Essence</Link>
+            <Link to="/colecao/patrimony">Patrimony</Link>
           </div>
           <div className="mega-col">
             <h4>ESPECIAIS</h4>
-            <Link to="/colecoes/bridal">Bridal / Noivas</Link>
-            <Link to="/colecoes/homem">Linha Masculina</Link>
+            <Link to="/colecao/bridal">Bridal / Noivas</Link>
+            <Link to="/colecao/identidade">M MORS Icon</Link>
           </div>
         </div>
       )

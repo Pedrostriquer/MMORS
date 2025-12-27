@@ -1,23 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 
-// --- IMPORTAÇÃO DOS COMPONENTES EXISTENTES ---
+// --- IMPORTAÇÃO DOS COMPONENTES PÚBLICOS ---
 import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import About from './components/About/About';
 import Essence from './components/Essence/Essence';
 import Certification from './components/Certification/Certification';
 import Patrimony from './components/Patrimony/Patrimony';
-import Products from './components/Products/Products'; // Grid da Home
+import Products from './components/Products/Products'; 
 import Bespoke from './components/Bespoke/Bespoke';
 import PatrimonialLevel from './components/PatrimonialLevel/PatrimonialLevel';
 import Footer from './components/Footer/Footer';
-
-// --- NOVO COMPONENTE DE VITRINE ---
 import Vitrine from './components/Vitrine/Vitrine';
+import CollectionPage from './components/CollectionPage/CollectionPage';
+import Loader from './components/Loader/Loader';
 
-// Auxiliar: Faz a página voltar ao topo automaticamente ao mudar de rota
+// --- IMPORTAÇÃO DO ADMIN (Caminhos atualizados) ---
+const Login = lazy(() => import('./admin/login/Login'));
+const AdminDashboard = lazy(() => import('./admin/layout/AdminLayout'));
+const ProtectedRoute = lazy(() => import('./admin/auth/ProtectedRoute'));
+
+// Auxiliar: Reseta o scroll
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -26,7 +31,21 @@ const ScrollToTop = () => {
   return null;
 };
 
-// Componente que agrupa as seções da tua Página Inicial original
+// Componente para gerenciar a exibição do Layout Público (Navbar/Footer)
+const LayoutWrapper = ({ children }) => {
+  const location = useLocation();
+  // Se a rota começar com /admin, não mostra Navbar nem Footer
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
+  return (
+    <>
+      {!isAdminRoute && <Navbar />}
+      {children}
+      {!isAdminRoute && <Footer />}
+    </>
+  );
+};
+
 const HomePage = () => (
   <>
     <Hero />
@@ -43,32 +62,35 @@ const HomePage = () => (
 function App() {
   return (
     <Router>
-      {/* Garante que o scroll reseta ao navegar entre categorias */}
       <ScrollToTop />
       
       <main className="app-container">
-        {/* Navbar fixa em todas as páginas */}
-        <Navbar />
-        
-        <Routes>
-          {/* Rota Principal: Landing Page Completa */}
-          <Route path="/" element={<HomePage />} />
-          
-          {/* Rotas da Vitrine: Capturam categoria e subcategoria da URL */}
-          <Route path="/categoria/:category" element={<Vitrine />} />
-          <Route path="/categoria/:category/:subcategory" element={<Vitrine />} />
-          
-          {/* Rota de Coleções (também usa a Vitrine) */}
-          <Route path="/colecoes" element={<Vitrine />} />
-          <Route path="/colecoes/:subcategory" element={<Vitrine />} />
+        {/* O LayoutWrapper decide se mostra ou não Navbar/Footer */}
+        <LayoutWrapper>
+          <Suspense fallback={<Loader />}>
+            <Routes>
+              {/* --- ROTAS PÚBLICAS --- */}
+              <Route path="/" element={<HomePage />} />
+              <Route path="/categoria/:category" element={<Vitrine />} />
+              <Route path="/categoria/:category/:subcategory" element={<Vitrine />} />
+              <Route path="/colecao/:collectionId" element={<CollectionPage />} />
+              <Route path="/a-marca" element={<About />} />
+              <Route path="/sob-medida" element={<Bespoke />} />
 
-          {/* Rotas Institucionais diretas (opcional) */}
-          <Route path="/a-marca" element={<About />} />
-          <Route path="/sob-medida" element={<Bespoke />} />
-        </Routes>
-
-        {/* Rodapé fixo em todas as páginas */}
-        <Footer />
+              {/* --- ROTAS ADMIN (Organizadas na nova estrutura) --- */}
+              <Route path="/admin/login" element={<Login />} />
+              
+              <Route 
+                path="/admin/dashboard/*" 
+                element={
+                  <ProtectedRoute>
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+            </Routes>
+          </Suspense>
+        </LayoutWrapper>
       </main>
     </Router>
   );

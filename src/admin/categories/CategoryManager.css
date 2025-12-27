@@ -1,0 +1,363 @@
+/* CONTAINER PRINCIPAL */
+.manager-container {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  padding: 20px;
+  animation: fadeIn 0.5s ease;
+}
+
+/* COLUNAS */
+.manager-column {
+  background: #fff;
+  min-width: 320px;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  border: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+}
+
+.manager-column.wide {
+  min-width: 550px;
+  flex: 1;
+}
+
+/* CABEÇALHOS DE COLUNA */
+.column-header {
+  margin-bottom: 25px;
+}
+
+.column-header h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #111;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.column-header p {
+  font-size: 0.85rem;
+  color: #999;
+  margin: 5px 0 0;
+}
+
+/* RESET E ESTILO DE INPUTS (SEM BORDA DE FOCO) */
+input {
+  outline: none !important; /* Remove a borda azul/preta padrão do navegador */
+  border: 1px solid #e5e5e5;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+input:focus {
+  border-color: #111;
+  background-color: #fff;
+}
+
+/* FORMULÁRIOS RÁPIDOS */
+.mini-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.mini-form input {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: #fcfcfc;
+}
+
+.mini-form button {
+  background: #111;
+  color: #fff;
+  border: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.mini-form button:hover {
+  background: #333;
+}
+
+/* LISTA DE CATEGORIAS (ESTÁTICA) */
+.list-item-static {
+  padding: 14px 18px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  color: #333;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+}
+
+/* ESTRUTURA DE ÁRVORE (CHARACTERISTICS) */
+.char-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tree-node {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #fff;
+}
+
+.tree-node.expanded {
+  border-color: #111;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.node-main {
+  padding: 18px 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #fff;
+  user-select: none;
+}
+
+.node-main .arrow {
+  font-size: 0.6rem;
+  color: #bbb;
+  transition: transform 0.3s;
+}
+
+.tree-node.expanded .node-main .arrow {
+  color: #111;
+}
+
+.node-main strong {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #111;
+}
+
+/* CONTEÚDO EXPANDIDO (RAMIFICAÇÃO) */
+.node-content {
+  padding: 0 24px 24px 50px; /* Recuo para criar o efeito de escada */
+  border-top: 1px solid #f9f9f9;
+  background: #fafafa;
+}
+
+/* BOX DE RELACIONAMENTO COM CATEGORIAS */
+.relation-box {
+  padding: 20px 0;
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.relation-box span {
+  font-size: 0.75rem;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  font-size: 0.8rem;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 6px 14px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chip:hover {
+  border-color: #111;
+}
+
+.chip input {
+  margin: 0;
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+
+/* RAMIFICAÇÃO DOS ATRIBUTOS (LINHAS DA ÁRVORE) */
+.attributes-branch {
+  margin-top: 25px;
+  position: relative;
+}
+
+/* Linha Vertical da Árvore */
+.attributes-branch::before {
+  content: '';
+  position: absolute;
+  left: -25px;
+  top: 0;
+  bottom: 20px;
+  width: 1.5px;
+  background: #e0e0e0;
+}
+
+.attr-leaf {
+  margin-bottom: 25px;
+  position: relative;
+}
+
+/* Linha Horizontal da Árvore */
+.attr-leaf::before {
+  content: '';
+  position: absolute;
+  left: -25px;
+  top: 14px;
+  width: 20px;
+  height: 1.5px;
+  background: #e0e0e0;
+}
+
+.leaf-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #111;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.leaf-label .dot {
+  width: 6px;
+  height: 6px;
+  background: #ccc;
+  border-radius: 50%;
+}
+
+/* SUB-ATRIBUTOS (TERCEIRO NÍVEL) */
+.sub-leaf-container {
+  padding-left: 20px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.tag {
+  background: #111;
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.sub-input-tree {
+  width: 100%;
+  max-width: 300px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  background: transparent;
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+  transition: border-style 0.2s;
+}
+
+.sub-input-tree:focus {
+  border-style: solid;
+  background: #fff;
+}
+
+/* ANIMAÇÕES */
+.animate-slide {
+  animation: slideDown 0.4s cubic-bezier(0, 1, 0, 1) forwards;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* SCROLLBAR PARA O PAINEL */
+.manager-container::-webkit-scrollbar {
+  height: 8px;
+}
+.manager-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.manager-container::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+.manager-container::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+/* ... seu CSS anterior ... */
+
+.sub-add-row {
+  display: flex;
+  gap: 8px;
+  max-width: 320px;
+}
+
+.sub-input-tree {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  background: transparent;
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.sub-input-tree:focus {
+  border-style: solid;
+  border-color: #111;
+  background: #fff;
+}
+
+.btn-add-sub {
+  background: #111;
+  color: #fff;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: background 0.2s;
+}
+
+.btn-add-sub:hover {
+  background: #333;
+}

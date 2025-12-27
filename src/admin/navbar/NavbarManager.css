@@ -1,0 +1,519 @@
+/* ==========================================================================
+   CONTAINER PRINCIPAL
+   ========================================================================== */
+.navbar-manager {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease;
+}
+
+/* HEADER DA PÁGINA */
+.manager-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #1a1a1a;
+}
+
+.header-title h2 {
+  font-weight: 300;
+  letter-spacing: 2px;
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.btn-save-lux {
+  background: #000;
+  color: #fff;
+  padding: 12px 35px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-save-lux:hover {
+  background: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.btn-save-lux:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   MOCKUP DA NAVBAR (PREVIEW SUPERIOR)
+   ========================================================================== */
+.nav-bar-editor {
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+}
+
+.nav-bar-editor h3 {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #aaa;
+  letter-spacing: 3px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.nav-bar-mockup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 20px;
+}
+
+.nav-item-btn {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #777;
+  cursor: pointer;
+  padding: 10px 15px;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.nav-item-btn:hover {
+  color: #000;
+}
+
+.nav-item-btn.active {
+  color: #000;
+  font-weight: 700;
+}
+
+.nav-item-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -21px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #000;
+}
+
+.remove-item {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff4d4d;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.nav-item-btn:hover .remove-item {
+  opacity: 1;
+}
+
+/* DROPDOWN DE ADIÇÃO (O BOTÃO PLUS) */
+.add-menu-dropdown {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  background: #f8f8f8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+  color: #999;
+}
+
+.add-menu-dropdown:hover {
+  background: #000;
+  color: #fff;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: #fff;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  border-radius: 10px;
+  z-index: 100;
+  min-width: 220px;
+  padding: 15px;
+  border: 1px solid #f0f0f0;
+}
+
+.add-menu-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.drop-label {
+  font-size: 0.65rem;
+  color: #bbb;
+  text-transform: uppercase;
+  display: block;
+  margin: 10px 0 8px;
+  letter-spacing: 1px;
+}
+
+.dropdown-content button {
+  width: 100%;
+  padding: 10px 12px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  transition: 0.2s;
+  color: #333;
+}
+
+.dropdown-content button:hover {
+  background: #f5f5f5;
+  padding-left: 18px;
+}
+
+.divider {
+  height: 1px;
+  background: #f0f0f0;
+  margin: 10px 0;
+}
+
+/* ==========================================================================
+   CONSTRUTOR DO MEGA MENU (BUILDER)
+   ========================================================================== */
+.mega-menu-builder {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 50px;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+}
+
+.builder-header {
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.badge-type {
+  display: inline-block;
+  font-size: 0.6rem;
+  background: #f0f0f0;
+  color: #666;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.builder-header h3 {
+  font-weight: 300;
+  font-size: 1.6rem;
+  color: #1a1a1a;
+}
+
+.builder-header strong {
+  font-weight: 600;
+  color: #000;
+  border-bottom: 2px solid #000;
+}
+
+/* GRID DAS COLUNAS */
+.mega-menu-grid {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  min-height: 500px;
+  overflow-x: auto;
+  padding-bottom: 20px;
+}
+
+.mega-column-editor {
+  flex: 0 0 280px;
+  background: #fcfcfc;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s;
+}
+
+.mega-column-editor:hover {
+  border-color: #ddd;
+  background: #fff;
+}
+
+.column-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.column-head input {
+  border: none !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  background: transparent;
+  outline: none;
+  width: 80%;
+  color: #000;
+  letter-spacing: 1px;
+}
+
+.column-head button {
+  background: none;
+  border: none;
+  color: #ccc;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.column-head button:hover {
+  color: #ff4d4d;
+}
+
+/* LISTA DE LINKS ADICIONADOS */
+.column-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  margin-bottom: 25px;
+}
+
+.link-pill {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #444;
+}
+
+.link-pill button {
+  background: none;
+  border: none;
+  color: #ddd;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.link-pill button:hover {
+  color: #ff4d4d;
+}
+
+/* SELETOR DE ATRIBUTOS/COLEÇÕES */
+.add-link-section {
+  border-top: 1px solid #f0f0f0;
+  padding-top: 20px;
+}
+
+.add-link-section span {
+  font-size: 0.65rem;
+  color: #bbb;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  display: block;
+  letter-spacing: 1px;
+}
+
+.attribute-picker {
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Estilização da Scrollbar interna */
+.attribute-picker::-webkit-scrollbar { width: 4px; }
+.attribute-picker::-webkit-scrollbar-track { background: #f9f9f9; }
+.attribute-picker::-webkit-scrollbar-thumb { background: #eee; border-radius: 10px; }
+
+.picker-group {
+  margin-bottom: 12px;
+  border-bottom: 1px solid #f8f8f8;
+  padding-bottom: 8px;
+}
+
+.picker-group button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 6px 0;
+  font-weight: 600;
+  color: #333;
+  transition: 0.2s;
+}
+
+.picker-group button.sub {
+  padding-left: 15px;
+  font-weight: 400;
+  color: #888;
+  font-size: 0.75rem;
+}
+
+.picker-group button:hover {
+  color: #000;
+  transform: translateX(3px);
+}
+
+.col-link-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #444;
+  transition: 0.2s;
+}
+
+.col-link-btn:hover {
+  color: #000;
+  font-weight: 600;
+}
+
+/* SLOT PARA NOVA COLUNA */
+.add-column-slot {
+  flex: 0 0 250px;
+  border: 2px dashed #e0e0e0;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #bbb;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s;
+  background: #fff;
+}
+
+.add-column-slot:hover {
+  border-color: #000;
+  color: #000;
+  background: #fcfcfc;
+}
+
+.char-select-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  padding: 20px;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.add-column-slot:hover .char-select-overlay {
+  display: flex;
+}
+
+.char-select-overlay button {
+  padding: 12px;
+  background: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: 0.2s;
+  color: #333;
+}
+
+.char-select-overlay button:hover {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+/* ESTADO VAZIO */
+.empty-state {
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ddd;
+  gap: 20px;
+}
+
+.empty-state p {
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+/* ANIMAÇÕES */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 1024px) {
+  .mega-menu-grid {
+    justify-content: flex-start;
+  }
+  
+  .form-layout {
+    grid-template-columns: 1fr;
+  }
+}

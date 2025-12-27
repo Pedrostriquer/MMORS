@@ -1,0 +1,113 @@
+/* Container principal que ocupa todo o ecrã */
+.admin-login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #0a0a0a; /* Fundo escuro luxuoso */
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Cartão de login centralizado */
+.login-card {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+/* Cabeçalho do Login */
+.login-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: 4px;
+  color: #1a1a1a;
+  font-weight: 300;
+}
+
+.login-header span {
+  display: block;
+  font-size: 0.8rem;
+  color: #888;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+/* Formulário e Inputs */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.input-group label {
+  font-size: 0.85rem;
+  color: #444;
+  font-weight: 500;
+}
+
+.input-group input {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #000;
+}
+
+/* Alerta de Erro */
+.error-alert {
+  background: #fff1f0;
+  border: 1px solid #ffa39e;
+  color: #cf1322;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+/* Botão de Login */
+.login-button {
+  background: #1a1a1a;
+  color: #fff;
+  padding: 14px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+
+.login-button:hover {
+  background: #333;
+}
+
+.login-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Rodapé do Login */
+.login-footer {
+  margin-top: 30px;
+  font-size: 0.75rem;
+  color: #aaa;
+}
