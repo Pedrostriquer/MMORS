@@ -70,8 +70,11 @@ function App() {
         
         <main className="app-container">
           <LayoutWrapper>
-            {/* Fallback definido como null para não exibir nada durante o carregamento das rotas lazy */}
-            <Suspense fallback={null}>
+            {/* ALTERAÇÃO: Substituí o fallback={null} por uma div com altura mínima. 
+              Isto mantém o espaço do body ocupado enquanto os componentes lazy carregam, 
+              evitando que a página pareça "encolher" apenas para a Navbar e Footer.
+            */}
+            <Suspense fallback={<div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ccc', letterSpacing: '2px', fontSize: '0.8rem' }}>M MORS</div>}>
               <Routes>
                 {/* --- ROTAS PÚBLICAS --- */}
                 <Route path="/" element={<HomePage />} />

@@ -20,15 +20,22 @@ const Vitrine = () => {
     const loadVitrineData = async () => {
       setLoading(true);
       try {
-        // 1. Procurar Categoria - Aceita ID (ex: zsAW...) ou Slug/Nome (ex: aneis)
-        const catSnap = await getDocs(collection(db, "categories"));
-        const allCats = catSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-        
-        const currentCat = allCats.find(c => 
-          c.id === categoryRef || 
-          (c.slug && c.slug.toLowerCase() === categoryRef.toLowerCase()) ||
-          c.nome.toLowerCase() === categoryRef.toLowerCase()
-        );
+        const isAllProducts = categoryRef === 'todos';
+        let currentCat = null;
+
+        // 1. Lógica de Categoria (Específica ou Geral)
+        if (isAllProducts) {
+          currentCat = { id: 'todos', nome: 'Todas as Joias' };
+        } else {
+          const catSnap = await getDocs(collection(db, "categories"));
+          const allCats = catSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+          
+          currentCat = allCats.find(c => 
+            c.id === categoryRef || 
+            (c.slug && c.slug.toLowerCase() === categoryRef.toLowerCase()) ||
+            c.nome.toLowerCase() === categoryRef.toLowerCase()
+          );
+        }
 
         if (!currentCat) {
           setCategoryData(null);
@@ -37,17 +44,30 @@ const Vitrine = () => {
         }
         setCategoryData(currentCat);
 
-        // 2. Procurar Características e Atributos em paralelo
-        // Busca apenas características que pertencem a esta categoria
-        const charQuery = query(
-          collection(db, "characteristics"), 
-          where("categoriesIds", "array-contains", currentCat.id)
-        );
+        // 2. Preparar Queries baseadas no contexto (Tudo ou Categoria)
+        let charQuery;
+        let prodQuery;
+
+        if (isAllProducts) {
+          // Busca todas as características e todos os produtos
+          charQuery = collection(db, "characteristics");
+          prodQuery = collection(db, "products");
+        } else {
+          // Filtra características e produtos pela categoria selecionada
+          charQuery = query(
+            collection(db, "characteristics"), 
+            where("categoriesIds", "array-contains", currentCat.id)
+          );
+          prodQuery = query(
+            collection(db, "products"), 
+            where("categoriaId", "==", currentCat.id)
+          );
+        }
         
         const [charSnap, attrSnap, prodSnap] = await Promise.all([
           getDocs(charQuery),
           getDocs(collection(db, "attributes")),
-          getDocs(query(collection(db, "products"), where("categoriaId", "==", currentCat.id)))
+          getDocs(prodQuery)
         ]);
 
         const chars = charSnap.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -58,16 +78,14 @@ const Vitrine = () => {
         setAttributes(attrs);
         setProducts(prods);
 
-        // 3. Lógica de Seleção Inicial vinda da Navbar (initialSubId)
+        // 3. Lógica de Seleção Inicial vinda da Navbar (Filtros pré-aplicados)
         if (initialSubId) {
           const targetAttr = attrs.find(a => a.id === initialSubId);
           if (targetAttr) {
-            // Se o ID for de um Atributo principal (ex: Ouro)
             setActiveFilters({ 
               [targetAttr.characteristicId]: { attrId: targetAttr.id, subValue: '' } 
             });
           } else {
-            // Se o ID for de um Sub-atributo (procura dentro dos arrays subAttributes)
             const parentAttr = attrs.find(a => 
               a.subAttributes?.some(s => s.id === initialSubId)
             );
@@ -92,19 +110,14 @@ const Vitrine = () => {
 
   // --- LÓGICA DE FILTRAGEM ---
   const filteredProducts = useMemo(() => {
-    // Se não houver filtros, mostra todos os produtos da categoria
     if (Object.keys(activeFilters).length === 0) return products;
 
     return products.filter(product => {
-      // O produto deve passar por TODOS os filtros ativos (Lógica AND entre grupos)
       return Object.entries(activeFilters).every(([charId, filter]) => {
         const productSpec = product.caracteristicas?.[charId];
         if (!productSpec) return false;
 
         const matchAttr = productSpec.attrId === filter.attrId;
-        
-        // Se houver sub-filtro selecionado (ex: 18k), checa igualdade.
-        // Se não houver sub-filtro, qualquer produto com o attrId pai passa (ex: mostra todos de "Ouro")
         const matchSub = filter.subValue ? productSpec.sub === filter.subValue : true;
 
         return matchAttr && matchSub;
@@ -115,7 +128,6 @@ const Vitrine = () => {
   const toggleFilter = (charId, attrId, subValue = '') => {
     setActiveFilters(prev => {
       const next = { ...prev };
-      // Se clicar no filtro já ativo, remove-o (toggle)
       if (next[charId]?.attrId === attrId && next[charId]?.subValue === subValue) {
         delete next[charId];
       } else {
@@ -125,9 +137,8 @@ const Vitrine = () => {
     });
   };
 
-  if (loading) return null;
-  
-  if (!categoryData) {
+  // Se não encontrar a categoria após carregar
+  if (!loading && !categoryData) {
     return (
       <div className="vitrine-error">
         <div className="container">
@@ -160,7 +171,6 @@ const Vitrine = () => {
                     .filter(a => a.characteristicId === char.id)
                     .map(attr => (
                       <div key={attr.id} className="attr-block">
-                        {/* Atributo Principal (ex: Ouro) */}
                         <label className="filter-label">
                           <input 
                             type="checkbox"
@@ -171,7 +181,6 @@ const Vitrine = () => {
                           <span className="label-text">{attr.nome}</span>
                         </label>
 
-                        {/* Sub-atributos (ex: 18k, 24k) */}
                         {attr.subAttributes?.map(sub => (
                           <label key={sub.id} className="filter-label sub-item">
                             <input 
@@ -194,20 +203,32 @@ const Vitrine = () => {
         {/* CONTEÚDO DA VITRINE */}
         <main className="vitrine-content">
           <div className="vitrine-info">
-            <div className="breadcrumb">HOME / {categoryData.nome.toUpperCase()}</div>
+            <div className="breadcrumb">HOME / {categoryData?.nome?.toUpperCase() || '...'}</div>
             <div className="title-row">
-              <h1>{categoryData.nome}</h1>
-              <p>{filteredProducts.length} JOIAS ENCONTRADAS</p>
+              <div className="title-with-action">
+                <h1>{categoryData?.nome || 'Carregando...'}</h1>
+                {categoryRef !== 'todos' && (
+                    <Link to="/categoria/todos" className="view-all-btn">VER TUDO</Link>
+                )}
+              </div>
+              <p>{loading ? '--' : filteredProducts.length} JOIAS ENCONTRADAS</p>
             </div>
           </div>
 
-          {filteredProducts.length > 0 ? (
+          {loading ? (
+            /* Loader interno para o corpo da vitrine */
+            <div className="vitrine-loading-state">
+              <div className="spinner-elegant"></div>
+              <p>A carregar acervo M MORS...</p>
+            </div>
+          ) : filteredProducts.length > 0 ? (
             <div className="product-grid">
               {filteredProducts.map(product => (
                 <div key={product.id} className="product-card">
                   <div className="product-image-box">
+                    {/* O CSS deve garantir que este box tenha altura fixa/proporcional */}
                     {product.media && product.media[0] ? (
-                      <img src={product.media[0].url} alt={product.nome} />
+                      <img src={product.media[0].url} alt={product.nome} loading="lazy" />
                     ) : (
                       <div className="img-placeholder">M MORS</div>
                     )}
@@ -218,7 +239,6 @@ const Vitrine = () => {
                   <div className="product-meta">
                     <h3>{product.nome}</h3>
                     <p className="material-text">
-                      {/* Mostra a primeira característica como detalhe (ex: Ouro 18k) */}
                       {Object.values(product.caracteristicas || {})[0]?.nome} 
                       {Object.values(product.caracteristicas || {})[0]?.sub ? ` (${Object.values(product.caracteristicas || {})[0]?.sub})` : ''}
                     </p>

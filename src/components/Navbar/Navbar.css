@@ -1,8 +1,7 @@
 .navbar {
   width: 100%;
-  background-color: var(--color-background);
+  background-color: #fff;
   border-bottom: 1px solid rgba(0,0,0,0.05);
-  /* position: fixed; */
   top: 0;
   left: 0;
   z-index: 1000;
@@ -17,14 +16,22 @@
   border-bottom: 1px solid rgba(0,0,0,0.03);
 }
 
+/* CENTRALIZAÇÃO DA LOGO: Usando Grid para garantir o centro absoluto */
 .nav-container {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 40px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; /* Três colunas: as laterais iguais empurram a logo pro meio */
   align-items: center;
+}
+
+/* Garante que a logo ocupe a coluna central */
+.nav-logo {
+  grid-column: 2;
+  display: flex;
+  justify-content: center;
 }
 
 .logo-img {
@@ -33,19 +40,35 @@
   object-fit: contain;
 }
 
+/* Alinha os ícones à direita da terceira coluna */
+.icons-nav {
+  grid-column: 3;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+/* Alinha o toggle mobile à esquerda da primeira coluna */
+.mobile-menu-toggle {
+  grid-column: 1;
+  display: none; /* Só aparece no mobile */
+  justify-content: flex-start;
+}
+
 .nav-links a {
   text-decoration: none;
-  color: var(--color-text);
+  color: #111;
   font-size: 0.75rem;
   letter-spacing: 2px;
 }
 
-/* LINHA DE PRODUTOS */
+/* LINHA DE PRODUTOS DESKTOP */
 .nav-products-row {
   height: 45px;
   display: flex;
   justify-content: center;
   position: relative;
+  background: #fff;
 }
 
 .products-menu {
@@ -65,22 +88,26 @@
 
 .nav-item-link {
   text-decoration: none;
-  color: var(--color-text);
+  color: #111;
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 3px;
   height: 100%;
   display: flex;
   align-items: center;
+  border-bottom: 2px solid transparent;
 }
 
-/* MEGA MENU - O "WRAPPER" É A PONTE INVISÍVEL */
+.nav-item-link.active {
+  border-bottom: 2px solid #111;
+}
+
+/* MEGA MENU ORIGINAL RESTAURADO */
 .mega-menu-wrapper {
   position: absolute;
-  top: 45px; /* Altura da nav-products-row */
+  top: 45px;
   left: 50%;
   transform: translateX(-50%);
-  padding-top: 0px; /* Se quiser um micro respiro, use padding aqui, não margin */
   z-index: 1001;
   width: 100vw;
   display: flex;
@@ -88,12 +115,12 @@
 }
 
 .mega-menu {
-  width: 95%; /* Largura da "ilha" */
+  width: 95%;
   max-width: 1200px;
   background: white;
   box-shadow: 0 15px 40px rgba(0,0,0,0.08);
   padding: 40px;
-  border-bottom-left-radius: 8px; /* Cantos levemente arredondados para efeito de ilha */
+  border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   border: 1px solid #f0f0f0;
   animation: slideDown 0.2s ease-out;
@@ -103,14 +130,13 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 40px;
-  text-align: left;
 }
 
 .mega-col h4 {
   font-size: 0.65rem;
   letter-spacing: 2px;
   margin-bottom: 20px;
-  color: var(--color-primary);
+  color: #111;
   border-bottom: 1px solid #f5f5f5;
   padding-bottom: 8px;
 }
@@ -121,14 +147,133 @@
   color: #666;
   margin-bottom: 12px;
   text-decoration: none;
-  transition: color 0.2s;
 }
 
-.mega-col a:hover {
-  color: var(--color-primary);
+.mega-col a:hover { color: #111; }
+
+.cart-link { position: relative; color: #111; }
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: #4D2032;
+  color: white;
+  font-size: 0.6rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- AJUSTE NO BOTÃO DE HAMBÚRGUER --- */
+.burger-btn { 
+  background: transparent; 
+  border: none; 
+  padding: 0;
+  margin: 0;
+  cursor: pointer; 
+  color: #111; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Remove o brilho ao tocar no celular */
+}
+
+/* --- MOBILE SIDEBAR --- */
+.mobile-sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.3s;
+  z-index: 2000;
+}
+
+.mobile-sidebar-overlay.active { visibility: visible; opacity: 1; }
+
+.mobile-sidebar {
+  width: 80%;
+  max-width: 320px;
+  height: 100%;
+  background: #fff;
+  transform: translateX(-100%);
+  transition: 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-sidebar-overlay.active .mobile-sidebar { transform: translateX(0); }
+
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.sidebar-logo { height: 35px; width: auto; }
+.close-sidebar { background: none; border: none; cursor: pointer; }
+
+.sidebar-menu { list-style: none; padding: 20px 0; overflow-y: auto; }
+.sidebar-item { border-bottom: 1px solid #f9f9f9; }
+
+.sidebar-item-row {
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-item-row a {
+  text-decoration: none;
+  color: #111;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.expand-btn { background: none; border: none; color: #888; transition: 0.3s; }
+.expand-btn .rotate { transform: rotate(180deg); }
+
+.sidebar-accordion-content { background: #fcfcfc; padding: 10px 20px 20px; }
+.accordion-col { margin-bottom: 15px; }
+.col-title { font-size: 0.7rem; font-weight: 700; display: block; margin-bottom: 8px; color: #888; }
+.accordion-col a { display: block; padding: 8px 0; text-decoration: none; color: #555; font-size: 0.8rem; }
+
+.all-products-link a {
+  display: block;
+  padding: 20px;
+  font-weight: 700;
+  color: #111;
+  text-decoration: none;
+  background: #f9f9f9;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 968px) {
+  .desktop-only { display: none !important; }
+  .mobile-menu-toggle { display: flex; }
+  .nav-container { 
+    padding: 0 20px;
+    display: flex; /* Volta para flex no mobile para simplificar */
+    justify-content: space-between;
+  }
+  .nav-logo { grid-column: initial; flex: 1; }
+  .icons-nav { grid-column: initial; flex: 1; }
+  .mobile-menu-toggle { grid-column: initial; flex: 1; }
+  .logo-img { height: 40px; }
 }
 
 @keyframes slideDown {
-  from { opacity: 0; transform: translateY(-10px); }
+  from { opacity: 0; transform: translateY(-10px); } /* Corrigido o pulo da animação */
   to { opacity: 1; transform: translateY(0); }
 }

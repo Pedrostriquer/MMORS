@@ -3,7 +3,7 @@
   height: 650px;
   background: linear-gradient(to bottom, #4D2032 1%, #d8d8d8 100%);
   display: flex;
-  overflow: hidden;
+  overflow: hidden; /* Garante que nada saia das bordas do Hero */
   position: relative;
 }
 
@@ -61,13 +61,14 @@
 .hero-title em { font-family: serif; font-style: italic; }
 
 .left-assets-wrapper {
-  width: 420px; /* Aumentado ligeiramente para o texto caber melhor */
+  max-width: 420px; /* Mudado para max-width para ser responsivo */
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center; 
 }
 
-/* DESIGN DO BOTÃO TIPO INPUT */
+/* DESIGN DO BOTÃO TIPO INPUT - AJUSTADO PARA MOBILE */
 .luxury-cta-box {
   position: relative;
   width: 100%;
@@ -77,16 +78,17 @@
   color: white;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Garante o botão na direita e texto na esquerda */
+  justify-content: space-between;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   margin-bottom: 80px;
 }
 
 .cta-text {
-  font-size: 0.82rem; /* Reduzido para garantir que caiba */
+  font-size: 0.82rem;
   font-weight: 300;
   letter-spacing: 0.5px;
-  white-space: nowrap;
+  /* Removido o white-space: nowrap para permitir quebra em telas muito pequenas */
+  padding-right: 10px;
 }
 
 .btn-text {
@@ -101,6 +103,7 @@
   letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.3s ease;
+  flex-shrink: 0; /* Impede o botão de ser esmagado */
 }
 
 .btn-text:hover {
@@ -171,7 +174,7 @@
   letter-spacing: 0.5px;
 }
 
-/* LADO DIREITO - MANTIDO SEU TRANSLATE */
+/* LADO DIREITO */
 .hero-right {
   flex: 1;
   display: flex;
@@ -187,11 +190,62 @@
   object-position: bottom right;
 }
 
-/* RESPONSIVIDADE */
+/* --- RESPONSIVIDADE --- */
 @media (max-width: 968px) {
-  .hero-container { height: auto; }
+  .hero-container { 
+    height: auto; 
+    min-height: 100vh;
+    padding-top: 100px; /* Espaço para a navbar no mobile */
+  }
+  
   .hero-content { flex-direction: column; }
-  .hero-left { padding: 60px 5%; align-items: center; }
-  .left-assets-wrapper { width: 95%; }
-  .hero-image-flush { transform: translateX(0); }
+  
+  .hero-left { 
+    padding: 60px 20px; 
+    align-items: center; 
+    text-align: center;
+    padding-left: 20px; /* Reseta o padding lateral */
+  }
+
+  .left-assets-wrapper { 
+    width: 100%; 
+    max-width: 380px; 
+  }
+
+  /* Sacrificando a imagem no mobile */
+  .hero-right { display: none; }
+
+  .hero-title { font-size: 2.5rem; }
+
+  .luxury-cta-box {
+    margin-bottom: 60px;
+    padding: 10px;
+  }
+
+  .cta-text {
+    font-size: 0.75rem;
+  }
+
+  .btn-text {
+    padding: 0 15px;
+    height: 36px;
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: 2.1rem; }
+  
+  .glass-card { 
+    width: 260px; 
+    padding: 40px 15px 15px;
+  }
+
+  .frosted-frame {
+    width: 65px;
+    height: 65px;
+  }
+
+  .center-out { top: -35px; }
+  .left-out, .right-out { top: -30px; }
 }
