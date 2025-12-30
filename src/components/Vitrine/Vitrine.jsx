@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { db } from '../../firebase/config';
 import { collection, getDocs, query, where } from 'firebase/firestore';
+import { Filter, X } from 'lucide-react';
 import './Vitrine.css';
 
 const Vitrine = () => {
@@ -13,8 +14,10 @@ const Vitrine = () => {
   const [characteristics, setCharacteristics] = useState([]);
   const [attributes, setAttributes] = useState([]);
   
-  // Estado dos filtros: { [charId]: { attrId: string, subValue: string } }
+  // Estado para filtros ativos: { [charId]: { attrId: string, subValue: string } }
   const [activeFilters, setActiveFilters] = useState({});
+  // Estado para controlar a abertura dos filtros no mobile
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   useEffect(() => {
     const loadVitrineData = async () => {
@@ -23,7 +26,7 @@ const Vitrine = () => {
         const isAllProducts = categoryRef === 'todos';
         let currentCat = null;
 
-        // 1. Lógica de Categoria (Específica ou Geral)
+        // 1. Definição da Categoria (Específica ou Geral)
         if (isAllProducts) {
           currentCat = { id: 'todos', nome: 'Todas as Joias' };
         } else {
@@ -44,16 +47,16 @@ const Vitrine = () => {
         }
         setCategoryData(currentCat);
 
-        // 2. Preparar Queries baseadas no contexto (Tudo ou Categoria)
+        // 2. Preparar Queries (Filtros e Produtos)
         let charQuery;
         let prodQuery;
 
         if (isAllProducts) {
-          // Busca todas as características e todos os produtos
+          // Busca todas as características e todos os produtos do banco
           charQuery = collection(db, "characteristics");
           prodQuery = collection(db, "products");
         } else {
-          // Filtra características e produtos pela categoria selecionada
+          // Filtra pela categoria selecionada
           charQuery = query(
             collection(db, "characteristics"), 
             where("categoriesIds", "array-contains", currentCat.id)
@@ -78,7 +81,7 @@ const Vitrine = () => {
         setAttributes(attrs);
         setProducts(prods);
 
-        // 3. Lógica de Seleção Inicial vinda da Navbar (Filtros pré-aplicados)
+        // 3. Filtros pré-aplicados (vindos da URL/Navbar)
         if (initialSubId) {
           const targetAttr = attrs.find(a => a.id === initialSubId);
           if (targetAttr) {
@@ -116,10 +119,8 @@ const Vitrine = () => {
       return Object.entries(activeFilters).every(([charId, filter]) => {
         const productSpec = product.caracteristicas?.[charId];
         if (!productSpec) return false;
-
         const matchAttr = productSpec.attrId === filter.attrId;
         const matchSub = filter.subValue ? productSpec.sub === filter.subValue : true;
-
         return matchAttr && matchSub;
       });
     });
@@ -137,7 +138,6 @@ const Vitrine = () => {
     });
   };
 
-  // Se não encontrar a categoria após carregar
   if (!loading && !categoryData) {
     return (
       <div className="vitrine-error">
@@ -153,9 +153,16 @@ const Vitrine = () => {
     <div className="vitrine-page animate-fade">
       <div className="vitrine-container">
         
-        {/* SIDEBAR DE FILTROS DINÂMICOS */}
-        <aside className="vitrine-sidebar">
-          <div className="sidebar-header">
+        {/* SIDEBAR DE FILTROS (Com Drawer para Mobile) */}
+        <aside className={`vitrine-sidebar ${isFilterOpen ? 'mobile-open' : ''}`}>
+          <div className="sidebar-mobile-header">
+            <h3>FILTRAR POR</h3>
+            <button className="close-filters" onClick={() => setIsFilterOpen(false)}>
+              <X size={20} />
+            </button>
+          </div>
+
+          <div className="sidebar-desktop-header">
             <h3>FILTRAR POR</h3>
             {Object.keys(activeFilters).length > 0 && (
               <button className="btn-clear" onClick={() => setActiveFilters({})}>LIMPAR</button>
@@ -200,23 +207,25 @@ const Vitrine = () => {
           </div>
         </aside>
 
-        {/* CONTEÚDO DA VITRINE */}
+        {/* CONTEÚDO PRINCIPAL */}
         <main className="vitrine-content">
           <div className="vitrine-info">
             <div className="breadcrumb">HOME / {categoryData?.nome?.toUpperCase() || '...'}</div>
             <div className="title-row">
               <div className="title-with-action">
                 <h1>{categoryData?.nome || 'Carregando...'}</h1>
-                {categoryRef !== 'todos' && (
-                    <Link to="/categoria/todos" className="view-all-btn">VER TUDO</Link>
+                {categoryRef !== 'todos' && !loading && (
+                  <Link to="/categoria/todos" className="view-all-btn">VER TUDO</Link>
                 )}
+                <button className="mobile-filter-trigger" onClick={() => setIsFilterOpen(true)}>
+                  <Filter size={16} /> FILTRAR
+                </button>
               </div>
               <p>{loading ? '--' : filteredProducts.length} JOIAS ENCONTRADAS</p>
             </div>
           </div>
 
           {loading ? (
-            /* Loader interno para o corpo da vitrine */
             <div className="vitrine-loading-state">
               <div className="spinner-elegant"></div>
               <p>A carregar acervo M MORS...</p>
@@ -226,7 +235,6 @@ const Vitrine = () => {
               {filteredProducts.map(product => (
                 <div key={product.id} className="product-card">
                   <div className="product-image-box">
-                    {/* O CSS deve garantir que este box tenha altura fixa/proporcional */}
                     {product.media && product.media[0] ? (
                       <img src={product.media[0].url} alt={product.nome} loading="lazy" />
                     ) : (
@@ -257,6 +265,9 @@ const Vitrine = () => {
           )}
         </main>
       </div>
+
+      {/* Overlay para fechar filtros mobile ao clicar fora */}
+      {isFilterOpen && <div className="filter-overlay" onClick={() => setIsFilterOpen(false)}></div>}
     </div>
   );
 };
