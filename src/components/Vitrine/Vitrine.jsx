@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { db } from '../../firebase/config';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import Loader from '../Loader/Loader';
 import './Vitrine.css';
 
 const Vitrine = () => {
@@ -126,7 +125,7 @@ const Vitrine = () => {
     });
   };
 
-  if (loading) return <Loader />;
+  if (loading) return null;
   
   if (!categoryData) {
     return (

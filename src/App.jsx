@@ -16,7 +16,6 @@ import PatrimonialLevel from './components/PatrimonialLevel/PatrimonialLevel';
 import Footer from './components/Footer/Footer';
 import Vitrine from './components/Vitrine/Vitrine';
 import CollectionPage from './components/CollectionPage/CollectionPage';
-import Loader from './components/Loader/Loader';
 import ProductPage from './components/ProductPage/ProductPage'; // Página de detalhes
 import CartPage from './components/CartPage/CartPage'; // Página da sacola
 
@@ -71,7 +70,8 @@ function App() {
         
         <main className="app-container">
           <LayoutWrapper>
-            <Suspense fallback={<Loader />}>
+            {/* Fallback definido como null para não exibir nada durante o carregamento das rotas lazy */}
+            <Suspense fallback={null}>
               <Routes>
                 {/* --- ROTAS PÚBLICAS --- */}
                 <Route path="/" element={<HomePage />} />

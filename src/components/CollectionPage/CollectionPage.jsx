@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { db } from '../../firebase/config'; //
 import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore'; //
-import Loader from '../Loader/Loader';
 import './CollectionPage.css';
 
 const CollectionPage = () => {
@@ -43,7 +42,7 @@ const CollectionPage = () => {
     fetchCollectionAndProducts();
   }, [collectionId]);
 
-  if (loading) return <Loader />;
+  if (loading) return null;
 
   if (!collectionData) {
     return <div className="collection-not-found">Coleção não encontrada.</div>;

@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '../../firebase/config';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { useCart } from '../../context/CartContext';
-import Loader from '../Loader/Loader';
 import './ProductPage.css';
 
 const ProductPage = () => {
@@ -64,7 +63,7 @@ const ProductPage = () => {
     navigate('/carrinho');
   };
 
-  if (loading) return <Loader />;
+  if (loading) return null;
   if (!product) return <div className="product-error">Joia não encontrada.</div>;
 
   return (
