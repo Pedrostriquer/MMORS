@@ -1,55 +1,197 @@
-.hero {
-  height: 100vh;
+.hero-container {
+  width: 100%;
+  height: 650px;
+  background: linear-gradient(to bottom, #4D2032 1%, #d8d8d8 100%);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background-color: var(--color-background); /* Pode adicionar uma imagem de fundo leve depois */
-  padding-top: 90px;
+  overflow: hidden;
+  position: relative;
 }
 
 .hero-content {
-  max-width: 800px;
+  display: flex;
+  width: 100%;
+  height: 100%;
 }
 
-.hero-subtitle {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--color-text-soft);
-  display: block;
-  margin-bottom: 20px;
+.hero-left {
+  flex: 1.2;
+  padding-left: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 10;
+  opacity: 0; /* Começa invisível para a animação */
 }
 
-.hero h1 {
-  font-size: 3.5rem;
-  line-height: 1.2;
+/* ANIMAÇÃO DA ESQUERDA */
+.animate-hero-left {
+  animation: slideInLeft 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.title-group {
   margin-bottom: 40px;
 }
 
-.hero h1 .slogan {
-  font-size: 1.2rem;
-  display: block;
-  margin-top: 10px;
-  font-family: var(--font-body);
-  font-weight: 300;
-  letter-spacing: 8px;
-  color: var(--color-text-soft);
-}
-
-.btn-primary {
-  background-color: var(--color-primary);
-  color: white;
-  border: none;
-  padding: 18px 40px;
-  font-family: var(--font-body);
+.hero-eyebrow {
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 5px;
   font-size: 0.7rem;
-  letter-spacing: 3px;
-  cursor: pointer;
-  transition: filter 0.3s;
+  margin-bottom: 15px;
+  display: block;
 }
 
-.btn-primary:hover {
-  filter: brightness(1.2);
+.hero-title {
+  color: #FFFFFF;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 200;
+  line-height: 1.1;
+}
+
+.hero-title em { font-family: serif; font-style: italic; }
+
+.left-assets-wrapper {
+  width: 420px; /* Aumentado ligeiramente para o texto caber melhor */
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+/* DESIGN DO BOTÃO TIPO INPUT */
+.luxury-cta-box {
+  position: relative;
+  width: 100%;
+  padding: 12px 13px;
+  border-radius: 50px;
+  background: #734556;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Garante o botão na direita e texto na esquerda */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  margin-bottom: 80px;
+}
+
+.cta-text {
+  font-size: 0.82rem; /* Reduzido para garantir que caiba */
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.btn-text {
+  padding: 0 22px;
+  height: 40px;
+  border-radius: 50px;
+  border: none;
+  background: #FFFFFF;
+  color: #4D2032;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-text:hover {
+  background: #f0f0f0;
+  transform: scale(1.03);
+}
+
+/* CARD VIDRO */
+.glass-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(50px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  width: 300px;
+  padding: 45px 20px 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+.frosted-frame {
+  position: absolute;
+  width: 75px; 
+  height: 75px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 5px;
+}
+
+.frosted-frame img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  background: white;
+}
+
+.left-out { top: -38px; left: -25px; }
+.center-out { top: -45px; left: 50%; transform: translateX(-50%); }
+.right-out { top: -38px; right: -25px; }
+
+.card-content-box {
+  text-align: center;
+}
+
+.card-label { 
+  color: #FFFFFF; 
+  font-size: 0.85rem; 
+  margin-bottom: 8px; 
+  font-weight: 500; 
+}
+
+.card-certification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.9);
+}
+
+.separator {
+  opacity: 0.5;
+  font-weight: 200;
+}
+
+.score { 
+  font-size: 0.7rem; 
+  letter-spacing: 0.5px;
+}
+
+/* LADO DIREITO - MANTIDO SEU TRANSLATE */
+.hero-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.hero-image-flush {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  transform: translateX(105px);
+  object-position: bottom right;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 968px) {
+  .hero-container { height: auto; }
+  .hero-content { flex-direction: column; }
+  .hero-left { padding: 60px 5%; align-items: center; }
+  .left-assets-wrapper { width: 95%; }
+  .hero-image-flush { transform: translateX(0); }
 }
