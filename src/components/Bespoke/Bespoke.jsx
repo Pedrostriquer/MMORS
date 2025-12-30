@@ -5,6 +5,15 @@ import './Bespoke.css';
 import sketchImg from '../../assets/80534856b751e3611f7f2d95b21741d6.jpg';
 
 const Bespoke = () => {
+  // Função para lidar com o redirecionamento do WhatsApp
+  const handleWhatsApp = () => {
+    const phoneNumber = "5573999916668"; // Código do país (55) + número fornecido
+    const message = encodeURIComponent("Olá! Gostaria de agendar uma consulta no ateliê M MORS para falar sobre um design de joia sob medida.");
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    
+    window.open(whatsappUrl, '_blank'); // Abre em uma nova aba
+  };
+
   return (
     <section id="bespoke" className="bespoke-section">
       <div className="bespoke-container">
@@ -43,10 +52,12 @@ const Bespoke = () => {
               </p>
             </div>
 
+            {/* Botão com evento de clique para o WhatsApp */}
             <motion.button 
               className="btn-outline"
               whileHover={{ backgroundColor: "var(--color-primary)", color: "#fff" }}
               transition={{ duration: 0.3 }}
+              onClick={handleWhatsApp}
             >
               AGENDAR CONSULTA NO ATELIÊ
             </motion.button>
