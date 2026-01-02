@@ -1,71 +1,93 @@
 /* src/index.css */
+
 :root {
   /* Paleta de Cores M MORS */
-  --color-primary: #4D2032; /* O tom Vinho/Burgundy luxuoso */
-  --color-background: #FEFEFE; /* O Off-white para fundos limpos */
-  --color-text: #000000; /* Preto puro para contraste máximo */
-  --color-text-soft: #333333; /* Um cinza escuro para textos longos, menos agressivo que o preto puro */
-  --color-gold-accent: #D4AF37; /* (Opcional) Um dourado para pequenos detalhes cairia bem, adicionei como sugestão */
+  --color-primary: #4D2032;
+  --color-background: #FEFEFE;
+  --color-text: #000000;
+  --color-text-soft: #333333;
+  --color-gold-accent: #D4AF37;
+  --section-spacing: 120px;
 
-  /* Tipografia */
+  /* ============================================================
+     ESCOLHA SUA TIPOGRAFIA AQUI (Descomente apenas uma opção)
+     ============================================================ */
+
+  /* OPÇÃO A: ADOBE TYPEKIT (Mrs Eaves - Muito Clássica) */
+  /* --font-main: "mrs-eaves-xl-serif-ot", serif;
+  --font-heading: "mrs-eaves-xl-serif-ot", serif; */
+
+  /* OPÇÃO B: LUXO MINIMALISTA (Cormorant Garamond - Fina e Elegante)  */
+  /* --font-main: 'Cormorant Garamond', serif;
+  --font-heading: 'Cormorant Garamond', serif; */
+ 
+
+  /* OPÇÃO C: ORIGINAL (Cinzel + Montserrat) */
+  --font-main: 'Cinzel', serif;
   --font-heading: 'Cinzel', serif;
-  --font-body: 'Montserrat', sans-serif;
-  
-  /* Espaçamentos Padrão */
-  --section-spacing: 120px; /* Espaço generoso entre sessões */
+ 
 }
 
+/* FORÇAR A FONTE EM TUDO */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: var(--font-main) !important;
 }
-/* src/index.css */
 
 html, body {
   width: 100%;
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Isso impede o scroll horizontal em toda a aplicação */
+  overflow-x: hidden;
   position: relative;
 }
 
 #root {
   width: 100%;
-  overflow-x: hidden;
-}
-
-.app-container {
-  width: 100%;
-  max-width: 100vw;
-  overflow-x: hidden;
 }
 
 body {
   background-color: var(--color-background);
   color: var(--color-text);
-  font-family: var(--font-body);
   line-height: 1.6;
-  -webkit-font-smoothing: antialiased; /* Deixa a fonte mais nítida */
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Estilos Base para Títulos de Luxo */
+/* Estilização de Títulos */
 h1, h2, h3, h4 {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading) !important;
   color: var(--color-primary);
-  font-weight: 400;
-  letter-spacing: 2px; /* Espaçamento entre letras dá sofisticação */
+  font-weight: 400; /* Peso mais fino para parecer mais caro */
+  letter-spacing: 2px; /* Aumento do espaçamento para dar ar de joalheria */
   text-transform: uppercase;
 }
 
+/* Estilização de Textos */
 p {
   color: var(--color-text-soft);
-  font-weight: 300;
+  font-weight: 400;
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
 }
 
-/* Utilitário para containers */
+/* Ajuste fino para links e botões herdarem a elegância */
+a, button {
+  text-decoration: none;
+  color: inherit;
+  font-family: var(--font-main) !important;
+  letter-spacing: 1px;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+}
+
+/* Utilitário para itálicos elegantes (comum em sites de joias) */
+.elegant-italic {
+  font-style: italic;
+  font-family: var(--font-main) !important;
 }
